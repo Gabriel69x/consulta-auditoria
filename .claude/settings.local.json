@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npm run build)",
+      "Bash(npm run dev -- --open)",
+      "Bash(grep '\"\"version\"\"')",
+      "Bash(npm install astro-icon @iconify-json/lucide)",
+      "Bash(node -e \"const p=require\\(''./node_modules/astro-icon/package.json''\\); console.log\\(p.version, p.exports ? Object.keys\\(p.exports\\).join\\('', ''\\) : ''no exports''\\)\")",
+      "Bash(vercel --version)",
+      "Bash(npm install -g vercel)",
+      "Bash(npx vercel --version)",
+      "Bash(gh auth status)"
+    ]
+  }
+}

@@ -1,0 +1,1428 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const topicGrid = [
+  { href: '#p1', icon: 'lucide:search', num: '01', text: 'Auditoría' },
+  { href: '#p2', icon: 'lucide:clipboard-list', num: '02', text: 'Planeación' },
+  { href: '#p3', icon: 'lucide:triangle-alert', num: '03', text: 'Amenazas' },
+  { href: '#p4', icon: 'lucide:refresh-cw', num: '04', text: 'Fases' },
+  { href: '#p5', icon: 'lucide:scale', num: '05', text: 'Leyes' },
+  { href: '#p6', icon: 'lucide:shield-check', num: '06', text: 'ISO 27001' },
+  { href: '#p7', icon: 'lucide:lock-keyhole', num: '07', text: 'SGSI' },
+];
+
+const p1Cards = [
+  {
+    icon: 'lucide:lock',
+    tag: 'Técnico',
+    tagClass: 'tag-blue',
+    title: 'Seguridad del Software',
+    text: 'Verifica controles de acceso, autenticación, cifrado y ausencia de vulnerabilidades conocidas (OWASP Top 10, CVEs críticos).',
+  },
+  {
+    icon: 'lucide:badge-check',
+    tag: 'Normativo',
+    tagClass: 'tag-green',
+    title: 'Cumplimiento Legal',
+    text: 'Asegura cumplimiento con Ley 1581, ISO 27001, GDPR y políticas internas. Verifica que el software esté alineado con la normativa vigente.',
+  },
+  {
+    icon: 'lucide:cpu',
+    tag: 'Funcional',
+    tagClass: 'tag-purple',
+    title: 'Calidad y Funcionalidad',
+    text: 'Evalúa que el programa cumpla requisitos funcionales y no funcionales: rendimiento, disponibilidad, escalabilidad y usabilidad.',
+  },
+  {
+    icon: 'lucide:git-branch',
+    tag: 'Proceso',
+    tagClass: 'tag-warn',
+    title: 'Gestión de Cambios',
+    text: 'Revisa procesos de desarrollo, control de versiones Git, pruebas, aprobaciones y documentación de modificaciones.',
+  },
+  {
+    icon: 'lucide:shield-alert',
+    tag: 'Crítico',
+    tagClass: 'tag-danger',
+    title: 'Continuidad del Negocio',
+    text: 'Valida existencia de backups, planes de recuperación ante desastres (DRP), alta disponibilidad y RTO/RPO definidos.',
+  },
+  {
+    icon: 'lucide:file-text',
+    tag: 'Auditoría',
+    tagClass: 'tag-blue',
+    title: 'Trazabilidad y Logs',
+    text: 'Confirma que el sistema genere registros suficientes para rastrear acciones, errores e incidentes de seguridad.',
+  },
+];
+
+const lawTabs = [
+  {
+    id: 'l1',
+    btn: 'Ley 1581 / 2012',
+    icon: 'lucide:scale',
+    heroClass: 'blue',
+    year: '2012',
+    title: 'Ley 1581 de 2012',
+    desc: 'Ley Estatutaria de Protección de Datos Personales — Marco legal principal para el tratamiento de datos en Colombia.',
+    points: [
+      { icon: 'lucide:check', text: '<strong>Alcance:</strong> Regula la recolección, almacenamiento, uso, circulación y supresión de datos de personas naturales por parte de cualquier organización pública o privada.' },
+      { icon: 'lucide:user-round', text: '<strong>Derechos del titular:</strong> Acceso, rectificación, supresión, portabilidad y a conocer el uso de sus datos en todo momento.' },
+      { icon: 'lucide:file-signature', text: '<strong>Autorización:</strong> Exige autorización <strong>previa, expresa e informada</strong> del titular antes de recolectar cualquier dato personal.' },
+      { icon: 'lucide:shield-x', text: '<strong>Datos sensibles:</strong> Protección especial para datos de salud, biometría, orientación sexual, origen étnico y filiación política.' },
+      { icon: 'lucide:building-2', text: '<strong>Autoridad:</strong> La Superintendencia de Industria y Comercio (SIC) puede imponer sanciones de hasta <strong>2.000 SMMLV</strong>.' },
+    ],
+  },
+  {
+    id: 'l2',
+    btn: 'Decreto 1377 / 2013',
+    icon: 'lucide:clipboard-list',
+    heroClass: 'purple',
+    year: '2013',
+    title: 'Decreto 1377 de 2013',
+    desc: 'Reglamentación parcial de la Ley 1581 — Precisa cómo aplicar las obligaciones de la ley en la práctica cotidiana.',
+    points: [
+      { icon: 'lucide:file-check', text: '<strong>Autorización:</strong> Detalla cómo obtener, guardar y documentar la autorización del titular, incluyendo mecanismos válidos (escrito, oral, conducta inequívoca).' },
+      { icon: 'lucide:mail-search', text: '<strong>PQR:</strong> Define mecanismos para atender peticiones, quejas y reclamos de los titulares, con plazos precisos de respuesta.' },
+      { icon: 'lucide:clock-3', text: '<strong>Plazos:</strong> Establece los tiempos para rectificación (<strong>10 días hábiles</strong>), actualización y supresión de datos personales.' },
+      { icon: 'lucide:globe', text: '<strong>Políticas de privacidad:</strong> Obliga a publicar la política de tratamiento de datos en el sitio web de forma visible y accesible.' },
+      { icon: 'lucide:plane', text: '<strong>Transferencia internacional:</strong> Precisa condiciones para transferir datos a países con niveles de protección adecuados.' },
+    ],
+  },
+  {
+    id: 'l3',
+    btn: 'Ley 1273 / 2009',
+    icon: 'lucide:siren',
+    heroClass: 'green',
+    year: '2009',
+    title: 'Ley 1273 de 2009',
+    desc: 'Ley de Delitos Informáticos — Modifica el Código Penal para tipificar crímenes contra sistemas y datos informáticos.',
+    points: [
+      { icon: 'lucide:ban', text: '<strong>Acceso abusivo:</strong> Tipifica el ingreso sin autorización a un sistema informático ajeno (pena de <strong>48 a 96 meses</strong> de prisión).' },
+      { icon: 'lucide:radio-tower', text: '<strong>Interceptación de datos:</strong> Sanciona la captura de datos en tránsito sin autorización, incluyendo comunicaciones privadas cifradas.' },
+      { icon: 'lucide:bomb', text: '<strong>Daño informático:</strong> Penaliza la eliminación, alteración, inutilización o destrucción de datos o sistemas informáticos ajenos.' },
+      { icon: 'lucide:bug', text: '<strong>Software malicioso:</strong> Sanciona la creación, distribución o uso de malware, virus, ransomware y cualquier código dañino.' },
+      { icon: 'lucide:badge-dollar-sign', text: '<strong>Perjuicio económico:</strong> Agrava las penas cuando el delito informático cause perjuicio económico o afecte infraestructura crítica.' },
+    ],
+  },
+];
+
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auditoría & Protección de Datos — UTS 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#030609;
+      --bg1:#060d14;
+      --bg2:#091520;
+      --bg3:#0d1e2d;
+      --card:#0a1929;
+      --border:#0e2a3d;
+      --border2:#163651;
+      --g1:#00f59b;
+      --g2:#00c4ff;
+      --g3:#7c5cfc;
+      --warn:#ffb830;
+      --danger:#ff4757;
+      --text:#b8cfe0;
+      --text2:#6a8fa8;
+      --head:#e8f4ff;
+      --r:10px;
+      --rm:6px;
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:17px}
+    body{
+      font-family:'Space Grotesk',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+      cursor:default;
+    }
+
+    h1,h2,h3{color:var(--head);font-family:'Space Grotesk',sans-serif;font-weight:700}
+    p{line-height:1.8}
+    a{color:var(--g2);text-decoration:none}
+    strong{color:var(--head);font-weight:600}
+    ::selection{background:#00f59b30;color:var(--head)}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--g1)}
+    code{font-family:'JetBrains Mono',monospace;font-size:.8em;color:var(--g1);background:#00f59b12;padding:.1em .4em;border-radius:4px}
+
+    body::before{
+      content:'';
+      position:fixed;inset:0;z-index:9999;pointer-events:none;
+      background:repeating-linear-gradient(0deg,transparent,transparent 2px,#00000008 2px,#00000008 4px);
+      animation:scanlines 8s linear infinite;
+    }
+    @keyframes scanlines{0%{background-position:0 0}100%{background-position:0 100%}}
+
+    .icon{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      line-height:0;
+    }
+    .icon svg{
+      width:1em;
+      height:1em;
+      display:block;
+    }
+
+    #progress{
+      position:fixed;top:0;left:0;z-index:1000;height:2px;
+      background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3));
+      transition:width .1s;width:0
+    }
+
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:500;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.9rem 4rem;
+      background:#030609e8;
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      transition:padding .3s;
+    }
+    nav.scrolled{padding:.6rem 4rem;border-color:var(--border2)}
+
+    .nav-brand{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:1.4rem;letter-spacing:.08em;
+      color:var(--g1);
+      display:flex;align-items:center;gap:.5rem;
+    }
+    .nav-brand span{color:var(--text2);font-size:.9rem;letter-spacing:.02em;font-family:'Space Grotesk',sans-serif;font-weight:400}
+
+    .nav-links{display:flex;gap:.2rem;list-style:none}
+    .nav-links a{
+      color:var(--text2);font-size:.78rem;font-weight:500;
+      padding:.3rem .6rem;border-radius:var(--rm);
+      transition:all .2s;
+      display:inline-flex;align-items:center;gap:.4rem;
+    }
+    .nav-links a:hover,.nav-links a.active{color:var(--g1);background:#00f59b12}
+    .nav-right{display:flex;align-items:center;gap:.5rem}
+    .icon-btn{
+      width:34px;height:34px;
+      background:none;border:1px solid var(--border2);border-radius:var(--rm);
+      color:var(--text2);cursor:pointer;font-size:.95rem;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .2s;
+    }
+    .icon-btn:hover{border-color:var(--g1);color:var(--g1);background:#00f59b0d}
+    .hamburger{display:none;flex-direction:column;gap:4px;width:34px;height:34px;align-items:center;justify-content:center;background:none;border:1px solid var(--border2);border-radius:var(--rm);cursor:pointer}
+    .hamburger span{display:block;width:16px;height:2px;background:var(--text2);border-radius:2px;transition:.3s}
+    @media(max-width:900px){
+      .nav-links{display:none}
+      .hamburger{display:flex}
+    }
+
+    .drawer-overlay{position:fixed;inset:0;z-index:600;background:#00000099;display:none}
+    .drawer-overlay.open{display:block}
+    .drawer{
+      position:fixed;right:-280px;top:0;bottom:0;z-index:700;width:260px;
+      background:var(--bg2);border-left:1px solid var(--border2);
+      padding:4rem 1.5rem 2rem;
+      transition:right .3s cubic-bezier(.4,0,.2,1);
+    }
+    .drawer.open{right:0}
+    .drawer a{display:flex;align-items:center;gap:.65rem;padding:.7rem .8rem;color:var(--text);font-weight:500;border-radius:var(--rm);margin-bottom:.2rem;transition:.2s;text-decoration:none}
+    .drawer a .icon{font-size:1rem;opacity:.8}
+    .drawer a:hover{background:#00f59b14;color:var(--g1)}
+    .drawer-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text2);font-size:1.2rem;cursor:pointer}
+
+    #hero{
+      min-height:100vh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:7rem 5rem 5rem;
+      text-align:center;
+      position:relative;overflow:hidden;
+    }
+    .hero-canvas{position:absolute;inset:0;z-index:0}
+    .hero-content{position:relative;z-index:1;max-width:1100px}
+
+    .badge{
+      display:inline-flex;align-items:center;gap:.5rem;
+      border:1px solid #00f59b30;background:#00f59b0d;
+      color:var(--g1);
+      padding:.35rem 1rem;border-radius:50px;
+      font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+      margin-bottom:1.5rem;
+      opacity:0;animation:fadeUp .7s .2s forwards;
+    }
+    .ping{width:7px;height:7px;border-radius:50%;background:var(--g1);animation:ping 1.8s infinite}
+    @keyframes ping{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.5)}}
+
+    .hero-title{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(3.5rem,9vw,7rem);
+      letter-spacing:.03em;line-height:.95;
+      margin-bottom:1.2rem;
+    }
+    .hero-title .line{display:block;opacity:0;transform:translateY(40px)}
+    .hero-title .line:nth-child(1){animation:fadeUp .7s .4s forwards}
+    .hero-title .line:nth-child(2){animation:fadeUp .7s .55s forwards;color:transparent;-webkit-text-stroke:2px var(--g1)}
+    .hero-title .line:nth-child(3){animation:fadeUp .7s .7s forwards;font-size:clamp(1.8rem,4vw,3rem);color:var(--text2);font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em}
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+    .hero-desc{
+      font-size:1rem;color:var(--text2);max-width:900px;margin:.8rem auto 2rem;
+      opacity:0;animation:fadeUp .7s .85s forwards;
+      line-height:1.75;
+    }
+    .hero-btns{
+      display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;
+      opacity:0;animation:fadeUp .7s 1s forwards;margin-bottom:2.5rem;
+    }
+    .btn{
+      display:inline-flex;align-items:center;gap:.45rem;
+      padding:.7rem 1.5rem;border-radius:var(--rm);
+      font-size:.85rem;font-weight:600;cursor:pointer;
+      border:none;font-family:'Space Grotesk',sans-serif;
+      transition:all .2s;text-decoration:none;
+    }
+    .btn .icon{font-size:1rem}
+    .btn-primary{
+      background:var(--g1);color:#030609;
+      box-shadow:0 0 30px #00f59b40;
+    }
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px #00f59b60}
+    .btn-ghost{
+      background:transparent;color:var(--head);
+      border:1px solid var(--border2);
+    }
+    .btn-ghost:hover{border-color:var(--g2);color:var(--g2);transform:translateY(-2px)}
+
+    .hero-stats{
+      display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:1.5rem;
+      opacity:0;animation:fadeUp .7s 1.1s forwards;
+    }
+    .stat{text-align:center}
+    .stat-n{display:block;font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--g1);line-height:1}
+    .stat-l{font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+    .stat-div{width:1px;height:40px;background:var(--border2)}
+
+    .topic-grid{
+      display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;
+      max-width:1200px;width:100%;margin:2rem auto 0;
+      opacity:0;animation:fadeUp .7s 1.3s forwards;
+      position:relative;z-index:1;
+    }
+    .chip{
+      display:flex;flex-direction:column;align-items:center;gap:.3rem;
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--r);padding:1rem .4rem;
+      text-decoration:none;color:var(--text);
+      transition:all .25s;position:relative;overflow:hidden;
+    }
+    .chip::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--g1),var(--g2));transform:scaleX(0);transition:.3s}
+    .chip:hover{transform:translateY(-5px);border-color:#00f59b40;box-shadow:0 12px 35px #00000060}
+    .chip:hover::after{transform:scaleX(1)}
+    .chip-i{
+      width:1.4rem;height:1.4rem;
+      display:flex;align-items:center;justify-content:center;
+      color:var(--g1);font-size:1.15rem;
+    }
+    .chip-n{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--g1);letter-spacing:.05em}
+    .chip-t{font-size:.62rem;color:var(--text2);text-align:center;line-height:1.3}
+    @media(max-width:700px){.topic-grid{grid-template-columns:repeat(4,1fr)}.stat-div{display:none}}
+
+    .section{padding:5rem 4rem;border-top:1px solid var(--border);position:relative}
+    .section.alt{background:linear-gradient(180deg,var(--bg1) 0%,transparent 60%)}
+    .section-inner{max-width:1400px;margin:0 auto}
+
+    .section-tag{
+      display:inline-flex;align-items:center;gap:.5rem;
+      color:var(--g1);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+      margin-bottom:.5rem;
+    }
+    .tag-pulse{width:6px;height:6px;border-radius:50%;background:var(--g1);animation:ping 2s infinite}
+    .section h2{font-size:clamp(1.7rem,3.5vw,2.3rem);margin-bottom:1.2rem;font-weight:700}
+    .section-num{
+      font-family:'Bebas Neue',sans-serif;font-size:5rem;
+      color:var(--border2);position:absolute;right:2rem;top:3rem;
+      line-height:1;user-select:none;pointer-events:none;
+    }
+    @media(max-width:700px){.section-num{display:none}}
+
+    .qbox{
+      background:#7c5cfc12;
+      border:1px solid #7c5cfc30;
+      border-left:4px solid var(--g3);
+      border-radius:var(--r);padding:1.2rem 1.4rem;margin-bottom:1rem;
+    }
+    .qbox-tag{
+      font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a78bfa;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem
+    }
+    .qbox p{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--head);margin:0;font-size:.97rem;line-height:1.6}
+
+    .abox{
+      background:#00f59b0d;
+      border:1px solid #00f59b20;
+      border-left:4px solid var(--g1);
+      border-radius:var(--r);padding:1.2rem 1.4rem;margin-bottom:1.8rem;
+    }
+    .abox-tag{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g1);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+    .abox p{margin:0;font-size:.9rem;line-height:1.8;color:var(--text)}
+
+    .rv{opacity:0;transform:translateY(25px);transition:opacity .65s ease,transform .65s ease}
+    .rv.vis{opacity:1;transform:translateY(0)}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    @media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:580px){.cards{grid-template-columns:1fr}}
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+      padding:1.4rem;transition:all .25s;position:relative;overflow:hidden;
+    }
+    .card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#00f59b08,transparent);opacity:0;transition:.3s}
+    .card:hover{transform:translateY(-5px);border-color:#00f59b30;box-shadow:0 15px 40px #00000060}
+    .card:hover::before{opacity:1}
+    .card-top{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem}
+    .card-icon{
+      font-size:1.35rem;width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:var(--bg2);border-radius:var(--rm);flex-shrink:0;color:var(--g1)
+    }
+    .card h3{font-size:.93rem;font-weight:700;margin:0}
+    .card p{font-size:.84rem;color:var(--text2);margin:0;line-height:1.7}
+    .card-tag{display:inline-block;font-size:.67rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.2rem .55rem;border-radius:50px;margin-bottom:.6rem}
+    .tag-green{background:#00f59b15;color:var(--g1)}
+    .tag-blue{background:#00c4ff15;color:var(--g2)}
+    .tag-purple{background:#7c5cfc15;color:#a78bfa}
+    .tag-warn{background:#ffb83015;color:var(--warn)}
+    .tag-danger{background:#ff475715;color:var(--danger)}
+
+    .acc{display:flex;flex-direction:column;gap:.5rem}
+    .acc-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+    .acc-item.open{border-color:#00f59b30}
+    .acc-head{
+      width:100%;display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 1.3rem;background:none;border:none;cursor:pointer;
+      text-align:left;gap:1rem;transition:background .2s;
+    }
+    .acc-head:hover{background:#00f59b08}
+    .acc-htitle{display:flex;align-items:center;gap:.6rem;font-weight:600;font-size:.92rem;color:var(--head);font-family:'Space Grotesk',sans-serif}
+    .acc-num{
+      width:26px;height:26px;border-radius:6px;
+      background:var(--bg2);border:1px solid var(--border2);
+      font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.04em;
+      color:var(--g1);display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
+    .acc-chevron{color:var(--text2);transition:transform .3s;flex-shrink:0}
+    .acc-item.open .acc-chevron{transform:rotate(180deg)}
+    .acc-body{display:none;padding:.9rem 1.3rem 1.2rem;border-top:1px solid var(--border);background:var(--bg2)}
+    .acc-item.open .acc-body{display:block}
+    .acc-body p{font-size:.87rem;color:var(--text2);margin:0;line-height:1.8}
+
+    .tri-wrap{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:.5rem;margin-bottom:1.5rem}
+    .tri-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;transition:.25s;position:relative}
+    .tri-card:hover{transform:translateY(-4px)}
+    .tri-card.vuln{border-top:3px solid var(--warn)}
+    .tri-card.threat{border-top:3px solid var(--danger)}
+    .tri-card.risk{border-top:3px solid var(--g3)}
+    .tri-icon{font-size:2rem;margin-bottom:.5rem;color:var(--head)}
+    .tri-card h3{font-size:1rem;margin-bottom:.4rem}
+    .tri-card p{font-size:.83rem;color:var(--text2);margin-bottom:.8rem;line-height:1.7}
+    .tri-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+    .tri-tags span{font-size:.66rem;background:var(--bg2);border:1px solid var(--border2);padding:.13rem .45rem;border-radius:4px;color:var(--text2)}
+    .tri-arrow{font-size:1.6rem;color:var(--border2);font-weight:300;line-height:1;flex-shrink:0;align-self:center}
+    .formula{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;margin-top:.6rem}
+    .formula span{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.85rem}
+    .formula .op{color:var(--text2)}
+    .formula .val{color:var(--g1)}
+    @media(max-width:700px){
+      .tri-wrap{grid-template-columns:1fr;grid-template-rows:auto auto auto auto auto}
+      .tri-arrow{transform:rotate(90deg);text-align:center}
+    }
+
+    .tabs-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+    .tabs-head{display:flex;border-bottom:1px solid var(--border)}
+    .tab-btn{
+      flex:1;padding:.8rem 1rem;background:none;border:none;cursor:pointer;
+      font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:600;
+      color:var(--text2);transition:.2s;position:relative;
+      display:flex;align-items:center;justify-content:center;gap:.5rem;
+    }
+    .tab-btn.active{color:var(--g1);background:#00f59b0a}
+    .tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--g1)}
+    .tab-btn:hover:not(.active){color:var(--head);background:#ffffff06}
+    .tab-panel{display:none;padding:1.4rem}
+    .tab-panel.active{display:block}
+    .example-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+    @media(max-width:600px){.example-grid{grid-template-columns:1fr}}
+    .ex-step{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rm);padding:1.1rem}
+    .ex-step.vuln{border-left:3px solid var(--warn)}
+    .ex-step.threat{border-left:3px solid var(--danger)}
+    .ex-step.risk{border-left:3px solid var(--g3)}
+    .ex-label{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:.5rem;display:flex;align-items:center;gap:.35rem}
+    .ex-label .icon{font-size:.85rem}
+    .ex-step p{font-size:.83rem;color:var(--text2);margin:0;line-height:1.7}
+
+    .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    @media(max-width:800px){.phases{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.phases{grid-template-columns:1fr}}
+    .phase{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;transition:.25s}
+    .phase:hover{transform:translateY(-4px);box-shadow:0 12px 35px #00000060}
+    .phase.p1{border-top:3px solid var(--g2)}
+    .phase.p2{border-top:3px solid var(--g3)}
+    .phase.p3{border-top:3px solid var(--g1)}
+    .phase.p4{border-top:3px solid var(--warn)}
+    .phase-badge{
+      width:36px;height:36px;border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.04em;
+      margin-bottom:.8rem;flex-shrink:0;
+    }
+    .b1{background:#00c4ff1a;color:var(--g2)}
+    .b2{background:#7c5cfc1a;color:#a78bfa}
+    .b3{background:#00f59b1a;color:var(--g1)}
+    .b4{background:#ffb8301a;color:var(--warn)}
+    .phase-title{font-size:.97rem;font-weight:700;margin-bottom:.2rem;display:flex;align-items:center;gap:.45rem}
+    .phase-sub{font-size:.72rem;color:var(--text2);margin-bottom:.8rem;font-family:'JetBrains Mono',monospace}
+    .phase p{font-size:.83rem;color:var(--text2);line-height:1.7;margin-bottom:.8rem}
+    .phase-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+    .phase-tags span{font-size:.64rem;background:var(--bg2);border:1px solid var(--border2);padding:.12rem .4rem;border-radius:4px;color:var(--text2)}
+
+    .laws-tabs{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+    .law-head{display:flex;border-bottom:1px solid var(--border)}
+    .law-btn{
+      flex:1;padding:.85rem;background:none;border:none;cursor:pointer;
+      font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:700;
+      color:var(--text2);transition:.2s;position:relative;
+      display:flex;align-items:center;justify-content:center;gap:.45rem;
+    }
+    .law-btn.active{color:var(--head);background:#00f59b09}
+    .law-btn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--g1)}
+    .law-panel{display:none;padding:1.5rem}
+    .law-panel.active{display:block}
+    .law-hero{
+      display:flex;gap:1rem;align-items:flex-start;
+      padding:1.2rem;border-radius:var(--r);margin-bottom:1.2rem;
+    }
+    .law-hero.blue{background:#00c4ff0d;border:1px solid #00c4ff20}
+    .law-hero.green{background:#00f59b0d;border:1px solid #00f59b20}
+    .law-hero.purple{background:#7c5cfc0d;border:1px solid #7c5cfc25}
+    .law-year{
+      font-family:'Bebas Neue',sans-serif;font-size:2.5rem;
+      line-height:1;opacity:.35;flex-shrink:0;
+    }
+    .blue .law-year{color:var(--g2)}
+    .green .law-year{color:var(--g1)}
+    .purple .law-year{color:var(--g3)}
+    .law-hero h3{font-size:1.05rem;margin-bottom:.3rem}
+    .law-hero p{font-size:.85rem;color:var(--text2);margin:0}
+    .law-points{display:flex;flex-direction:column;gap:.8rem}
+    .lp{display:flex;gap:.7rem;align-items:flex-start}
+    .lp-icon{font-size:.95rem;flex-shrink:0;margin-top:.12rem;color:var(--head)}
+    .lp div{font-size:.86rem;color:var(--text2);line-height:1.75}
+    .lp strong{color:var(--head)}
+
+    .cia-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+    @media(max-width:700px){.cia-grid{grid-template-columns:1fr}}
+    .cia-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;transition:.3s;position:relative;overflow:hidden}
+    .cia-card:hover{transform:translateY(-5px);box-shadow:0 15px 40px #00000060}
+    .cia-card.conf{border-top:3px solid var(--g2)}
+    .cia-card.integ{border-top:3px solid var(--g1)}
+    .cia-card.avail{border-top:3px solid #a78bfa}
+    .cia-letter{
+      font-family:'Bebas Neue',sans-serif;font-size:4rem;
+      line-height:1;opacity:.1;margin-bottom:-.3rem;
+    }
+    .conf .cia-letter{color:var(--g2)}
+    .integ .cia-letter{color:var(--g1)}
+    .avail .cia-letter{color:#a78bfa}
+    .cia-title{display:flex;align-items:center;gap:.5rem}
+    .cia-card h3{font-size:1.1rem;margin-bottom:.4rem}
+    .cia-card>p{font-size:.85rem;color:var(--text2);margin-bottom:1rem;line-height:1.7}
+    .controls{display:flex;flex-direction:column;gap:.3rem;margin-bottom:1rem}
+    .ctl{font-size:.78rem;color:var(--text2);background:var(--bg2);border:1px solid var(--border);padding:.22rem .6rem;border-radius:6px;display:flex;align-items:center;gap:.4rem}
+    .bank-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rm);padding:.8rem}
+    .bank-label{font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:.35rem;display:flex;align-items:center;gap:.3rem}
+    .bank-box p{font-size:.8rem;color:var(--text2);margin:0;line-height:1.6}
+
+    .where-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem}
+    .where-box h3{margin-bottom:1rem;font-size:.97rem}
+    .chips-flex{display:flex;flex-wrap:wrap;gap:.4rem}
+    .apply-chip{
+      font-size:.77rem;background:var(--bg2);border:1px solid var(--border2);
+      padding:.3rem .7rem;border-radius:50px;color:var(--text2);
+      transition:.2s;cursor:default;display:inline-flex;align-items:center;gap:.35rem;
+    }
+    .apply-chip:hover{border-color:var(--g1);color:var(--g1);background:#00f59b0d}
+
+    .phva{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin:1.2rem 0 2rem}
+    @media(max-width:700px){.phva{grid-template-columns:1fr 1fr}}
+    .phva-item{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--r);padding:1.2rem;transition:.25s;
+    }
+    .phva-item:hover{transform:translateY(-3px)}
+    .phva-item.pp{border-left:3px solid var(--g2)}
+    .phva-item.ph{border-left:3px solid var(--g1)}
+    .phva-item.pv{border-left:3px solid var(--warn)}
+    .phva-item.pa{border-left:3px solid var(--g3)}
+    .phva-letter{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;line-height:1;margin-bottom:.2rem}
+    .pp .phva-letter{color:var(--g2)}
+    .ph .phva-letter{color:var(--g1)}
+    .pv .phva-letter{color:var(--warn)}
+    .pa .phva-letter{color:#a78bfa}
+    .phva-title{font-size:.93rem;font-weight:700;color:var(--head);margin-bottom:.4rem;display:flex;align-items:center;gap:.45rem}
+    .phva-item p{font-size:.8rem;color:var(--text2);margin:0;line-height:1.7}
+
+    .matrix-wrap{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--r);padding:1.4rem;margin:1rem 0 1.5rem;
+    }
+    .matrix-title{font-size:.88rem;font-weight:700;color:var(--head);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .matrix-legend{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+    .ml{font-size:.68rem;font-weight:700;padding:.18rem .65rem;border-radius:50px;letter-spacing:.04em}
+    .ml-crit{background:#ff475720;color:#ff8f9a}
+    .ml-high{background:#ffb83020;color:#ffd080}
+    .ml-med{background:#00c4ff20;color:#7dd3ed}
+    .ml-low{background:#00f59b20;color:var(--g1)}
+    .matrix-grid{
+      display:grid;grid-template-columns:auto repeat(3,1fr);
+      gap:6px;font-size:.75rem;
+    }
+    .mg-corner{background:transparent}
+    .mg-hdr{
+      background:#00f59b12;padding:.55rem;text-align:center;
+      font-weight:700;color:var(--g1);border-radius:6px;font-size:.7rem;
+      font-family:'JetBrains Mono',monospace;
+    }
+    .mg-side{
+      display:flex;align-items:center;justify-content:flex-end;
+      padding-right:.6rem;font-weight:600;color:var(--text2);
+      font-size:.68rem;white-space:nowrap;
+      font-family:'JetBrains Mono',monospace;
+    }
+    .mg-cell{
+      padding:.75rem .4rem;text-align:center;border-radius:8px;
+      font-weight:800;font-size:.72rem;cursor:pointer;
+      transition:all .22s;position:relative;
+      font-family:'JetBrains Mono',monospace;letter-spacing:.04em;
+    }
+    .mg-cell:hover{transform:scale(1.08);z-index:2;box-shadow:0 4px 20px #00000060}
+    .crit{background:#ff47572a;color:#ff8f9a;border:1px solid #ff475730}
+    .crit:hover{background:#ff475745}
+    .high{background:#ffb8302a;color:#ffd080;border:1px solid #ffb83030}
+    .high:hover{background:#ffb83045}
+    .med{background:#00c4ff1e;color:#7dd3ed;border:1px solid #00c4ff25}
+    .med:hover{background:#00c4ff35}
+    .low{background:#00f59b1c;color:#7de8c5;border:1px solid #00f59b22}
+    .vlow{background:#00f59b0d;color:#a7f3d0;border:1px solid #00f59b15}
+    #matTip{
+      position:fixed;background:var(--bg2);border:1px solid var(--border2);
+      border-radius:var(--rm);padding:.5rem 1rem;font-size:.76rem;color:var(--head);
+      pointer-events:none;opacity:0;transition:opacity .15s;z-index:900;
+      white-space:nowrap;box-shadow:0 8px 25px #00000080;
+    }
+    #matTip.show{opacity:1}
+
+    .tbl-wrap{overflow-x:auto}
+    .rtbl{border-collapse:collapse;width:100%;min-width:600px}
+    .rtbl th,.rtbl td{padding:.6rem .9rem;text-align:left;border-bottom:1px solid var(--border);font-size:.81rem}
+    .rtbl th{
+      background:var(--bg2);
+      font-family:'JetBrains Mono',monospace;font-weight:700;
+      color:var(--g1);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
+    }
+    .rtbl tr:hover td{background:#00f59b05}
+    .rbadge{display:inline-block;padding:.17rem .6rem;border-radius:50px;font-size:.69rem;font-weight:700;font-family:'JetBrains Mono',monospace}
+    .rb-c{background:#ff475720;color:#ff8f9a}
+    .rb-h{background:#ffb83020;color:#ffd080}
+    .rb-m{background:#00c4ff20;color:#7dd3ed}
+    .rb-l{background:#00f59b1a;color:var(--g1)}
+
+    .ibanner{
+      background:#00c4ff0d;border:1px solid #00c4ff20;
+      border-radius:var(--r);padding:1rem 1.2rem;
+      display:flex;gap:.8rem;align-items:flex-start;
+      margin-bottom:1.5rem;font-size:.87rem;
+    }
+    .ibanner-icon{font-size:1.2rem;flex-shrink:0;color:var(--g2)}
+    .ibanner p{margin:0;line-height:1.75}
+
+    footer{
+      text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);
+      color:var(--text2);font-size:.83rem;
+    }
+    .footer-inner{max-width:700px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:.7rem}
+    .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--g1);letter-spacing:.06em}
+    .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+    .footer-links a{color:var(--text2);transition:.2s}
+    .footer-links a:hover{color:var(--g1)}
+    .footer-links span{color:var(--border2)}
+
+    .scroll-top{
+      position:fixed;bottom:1.8rem;right:1.8rem;z-index:400;
+      width:42px;height:42px;background:var(--g1);color:#030609;
+      border:none;border-radius:var(--rm);font-size:1.1rem;
+      cursor:pointer;font-weight:700;
+      box-shadow:0 4px 20px #00f59b40;
+      opacity:0;pointer-events:none;transition:.3s;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .scroll-top.visible{opacity:1;pointer-events:all}
+    .scroll-top:hover{transform:translateY(-3px);box-shadow:0 6px 30px #00f59b60}
+
+    .blob{position:absolute;border-radius:50%;filter:blur(100px);animation:blobMove 10s ease-in-out infinite;pointer-events:none}
+    .blob1{width:600px;height:600px;background:#00f59b0a;top:-200px;left:-150px}
+    .blob2{width:500px;height:500px;background:#00c4ff09;bottom:-100px;right:-150px;animation-delay:-4s}
+    .blob3{width:400px;height:400px;background:#7c5cfc07;top:40%;left:50%;transform:translate(-50%,-50%);animation-delay:-8s}
+    @keyframes blobMove{0%,100%{transform:scale(1) translate(0,0)}33%{transform:scale(1.07) translate(20px,-15px)}66%{transform:scale(.95) translate(-15px,20px)}}
+
+    .glow{text-shadow:0 0 30px var(--g1);color:var(--g1)}
+    .cyber-line{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g1),transparent);opacity:.15}
+  </style>
+</head>
+<body>
+  <div id="progress"></div>
+
+  <nav id="navbar">
+    <a href="#hero" class="nav-brand">
+      <span class="icon"><Icon name="lucide:shield" /></span>
+      AUDITSEC <span>· UTS 2025</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero">Inicio</a></li>
+      <li><a href="#p1">Auditoría</a></li>
+      <li><a href="#p2">Planeación</a></li>
+      <li><a href="#p3">Amenazas</a></li>
+      <li><a href="#p4">Fases</a></li>
+      <li><a href="#p5">Leyes CO</a></li>
+      <li><a href="#p6">ISO 27001</a></li>
+      <li><a href="#p7">SGSI</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="icon-btn hamburger" id="ham" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="drawer-overlay" id="dOverlay"></div>
+  <div class="drawer" id="drawer">
+    <button class="drawer-close" id="dClose">✕</button>
+    <div class="footer-brand" style="margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">AUDITSEC</div>
+
+    <a href="#hero"><span class="icon"><Icon name="lucide:house" /></span> Inicio</a>
+    <a href="#p1"><span class="icon"><Icon name="lucide:search" /></span> Auditoría</a>
+    <a href="#p2"><span class="icon"><Icon name="lucide:clipboard-list" /></span> Planeación</a>
+    <a href="#p3"><span class="icon"><Icon name="lucide:triangle-alert" /></span> Amenazas</a>
+    <a href="#p4"><span class="icon"><Icon name="lucide:refresh-cw" /></span> Fases</a>
+    <a href="#p5"><span class="icon"><Icon name="lucide:scale" /></span> Leyes</a>
+    <a href="#p6"><span class="icon"><Icon name="lucide:globe" /></span> ISO 27001</a>
+    <a href="#p7"><span class="icon"><Icon name="lucide:shield-check" /></span> SGSI</a>
+  </div>
+
+  <div id="matTip"></div>
+
+  <section id="hero">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+    <div class="hero-content">
+      <div class="badge"><span class="ping"></span> Consulta Académica · UTS 2025</div>
+      <h1 class="hero-title">
+        <span class="line">FUNDAMENTOS</span>
+        <span class="line">AUDITORÍA</span>
+        <span class="line">& Protección de Datos Personales</span>
+      </h1>
+      <p class="hero-desc">
+        Guía completa sobre auditoría de sistemas, gestión de riesgos, norma ISO 27001,
+        leyes colombianas de protección de datos y SGSI.
+      </p>
+      <div class="hero-btns">
+        <a href="#p1" class="btn btn-primary">
+          <span class="icon"><Icon name="lucide:arrow-right" /></span>
+          Explorar Contenido
+        </a>
+        <a href="#p5" class="btn btn-ghost">
+          <span class="icon"><Icon name="lucide:scale" /></span>
+          Leyes CO
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-n" data-target="7">0</span><span class="stat-l">Preguntas</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-n" data-target="3">0</span><span class="stat-l">Leyes</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-n" data-target="3">0</span><span class="stat-l">Pilares CIA</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-n" data-target="93">0</span><span class="stat-l">Controles ISO</span></div>
+      </div>
+    </div>
+
+    <div class="topic-grid">
+      {topicGrid.map((item) => (
+        <a href={item.href} class="chip">
+          <span class="chip-i icon"><Icon name={item.icon} /></span>
+          <span class="chip-n">{item.num}</span>
+          <span class="chip-t">{item.text}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section id="p1" class="section alt">
+    <div class="section-num">01</div>
+    <div class="section-inner">
+      <div class="section-tag rv"><span class="tag-pulse"></span>Pregunta 01</div>
+      <h2 class="rv">Auditoría de Programas</h2>
+
+      <div class="qbox rv">
+        <div class="qbox-tag">
+          <span class="icon"><Icon name="lucide:circle-help" /></span>
+          <span>Pregunta</span>
+        </div>
+        <p>En qué se enfoca y cuáles son los aspectos claves al realizar la auditoría de programas.</p>
+      </div>
+
+      <div class="abox rv">
+        <div class="abox-tag">
+          <span class="icon"><Icon name="lucide:lightbulb" /></span>
+          <span>Respuesta</span>
+        </div>
+        <p>La <strong>auditoría de programas</strong> evalúa si los sistemas de software cumplen objetivos organizacionales, estándares de calidad, controles de seguridad y requisitos regulatorios. Su propósito es identificar riesgos, ineficiencias y vulnerabilidades en el ciclo de vida del software.</p>
+      </div>
+
+      <div class="ibanner rv">
+        <span class="ibanner-icon icon"><Icon name="lucide:target" /></span>
+        <p><strong>Objetivo central:</strong> Garantizar que los programas funcionen correctamente, sean seguros, confiables y alineados con las políticas organizacionales, minimizando riesgos operativos y de seguridad.</p>
+      </div>
+
+      <div class="cards rv">
+        {p1Cards.map((card) => (
+          <div class="card">
+            <div class="card-top">
+              <div class="card-icon icon"><Icon name={card.icon} /></div>
+              <div>
+                <span class={`card-tag ${card.tagClass}`}>{card.tag}</span>
+                <h3>{card.title}</h3>
+              </div>
+            </div>
+            <p>{card.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="p2" class="section">
+    <div class="section-num">02</div>
+    <div class="section-inner">
+      <div class="section-tag rv"><span class="tag-pulse"></span>Pregunta 02</div>
+      <h2 class="rv">Planeación de la Auditoría</h2>
+
+      <div class="qbox rv">
+        <div class="qbox-tag">
+          <span class="icon"><Icon name="lucide:circle-help" /></span>
+          <span>Pregunta</span>
+        </div>
+        <p>Qué aspectos y recomendaciones se deben tener en cuenta en la planeación de la auditoría.</p>
+      </div>
+
+      <div class="abox rv">
+        <div class="abox-tag">
+          <span class="icon"><Icon name="lucide:lightbulb" /></span>
+          <span>Respuesta</span>
+        </div>
+        <p>La planeación es la <strong>fase más crítica</strong>. Define el alcance, los recursos, los métodos y los criterios de evaluación. Los 6 aspectos clave con sus recomendaciones:</p>
+      </div>
+
+      <div class="acc rv" id="acc2">
+        <div class="acc-item open">
+          <button class="acc-head" type="button">
+            <span class="acc-htitle"><span class="acc-num">01</span><span class="icon"><Icon name="lucide:target" /></span> Definición del Alcance y Objetivos</span>
+            <span class="acc-chevron icon"><Icon name="lucide:chevron-down" /></span>
+          </button>
+          <div class="acc-body"><p>Delimitar claramente qué sistemas, procesos y áreas serán auditados. Definir objetivos <strong>SMART</strong> (Específicos, Medibles, Alcanzables, Relevantes y en Tiempo). Se recomienda documentar el <em>Statement of Work</em> aprobado por la dirección antes de iniciar.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" type="button">
+            <span class="acc-htitle"><span class="acc-num">02</span><span class="icon"><Icon name="lucide:triangle-alert" /></span> Identificación Previa de Riesgos</span>
+            <span class="acc-chevron icon"><Icon name="lucide:chevron-down" /></span>
+          </button>
+          <div class="acc-body"><p>Realizar un análisis preliminar de riesgos para priorizar áreas críticas. Usar una <strong>matriz de riesgo inherente</strong> en esta etapa. Permite enfocar tiempo y recursos del equipo auditor en los procesos con mayor impacto potencial.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" type="button">
+            <span class="acc-htitle"><span class="acc-num">03</span><span class="icon"><Icon name="lucide:users" /></span> Conformación del Equipo Auditor</span>
+            <span class="acc-chevron icon"><Icon name="lucide:chevron-down" /></span>
+          </button>
+          <div class="acc-body"><p>Seleccionar auditores con competencias técnicas apropiadas (seguridad, sistemas, procesos). Verificar que no existan conflictos de interés. Asignar roles claros: <strong>auditor líder</strong>, auditores de apoyo y expertos técnicos especializados.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" type="button">
+            <span class="acc-htitle"><span class="acc-num">04</span><span class="icon"><Icon name="lucide:files" /></span> Recopilación de Información Inicial</span>
+            <span class="acc-chevron icon"><Icon name="lucide:chevron-down" /></span>
+          </button>
+          <div class="acc-body"><p>Obtener y revisar: políticas, procedimientos, organigramas, informes de auditorías anteriores, registros de incidentes, arquitectura del sistema y contratos con proveedores. Esta revisión documental orienta el trabajo de campo.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" type="button">
+            <span class="acc-htitle"><span class="acc-num">05</span><span class="icon"><Icon name="lucide:calendar-days" /></span> Cronograma y Recursos</span>
+            <span class="acc-chevron icon"><Icon name="lucide:chevron-down" /></span>
+          </button>
+          <div class="acc-body"><p>Elaborar un plan de trabajo con fechas, responsables, entregables e hitos clave. Estimar el presupuesto, los accesos necesarios a sistemas y las herramientas de auditoría a utilizar.</p></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" type="button">
+            <span class="acc-htitle"><span class="acc-num">06</span><span class="icon"><Icon name="lucide:scan-search" /></span> Criterios y Metodología</span>
+            <span class="acc-chevron icon"><Icon name="lucide:chevron-down" /></span>
+          </button>
+          <div class="acc-body"><p>Establecer los estándares de auditoría: <code>ISO 27001</code>, <code>NIST</code>, <code>COBIT</code>, leyes colombianas. Definir metodología de muestreo, técnicas de recolección de evidencia, formatos de hallazgos y niveles de criticidad.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p3" class="section alt">
+    <div class="section-num">03</div>
+    <div class="section-inner">
+      <div class="section-tag rv"><span class="tag-pulse"></span>Pregunta 03</div>
+      <h2 class="rv">Vulnerabilidad, Amenaza y Riesgo</h2>
+
+      <div class="qbox rv">
+        <div class="qbox-tag">
+          <span class="icon"><Icon name="lucide:circle-help" /></span>
+          <span>Pregunta</span>
+        </div>
+        <p>Qué es la vulnerabilidad, la amenaza y el riesgo. Explicar cada término. Dar 2 ejemplos prácticos: uno de sistemas y otro de empresa o situación.</p>
+      </div>
+
+      <div class="abox rv">
+        <div class="abox-tag">
+          <span class="icon"><Icon name="lucide:lightbulb" /></span>
+          <span>Respuesta</span>
+        </div>
+        <p>Son los tres conceptos fundamentales de la gestión de seguridad. Se relacionan en cadena: una <strong>amenaza</strong> explota una <strong>vulnerabilidad</strong> generando un <strong>riesgo</strong> sobre un activo de información.</p>
+      </div>
+
+      <div class="tri-wrap rv">
+        <div class="tri-card vuln">
+          <div class="tri-icon icon"><Icon name="lucide:lock-open" /></div>
+          <h3>Vulnerabilidad</h3>
+          <p>Debilidad o falla en un sistema, proceso o activo que puede ser explotada. Por sí sola no causa daño; es la puerta de entrada para un ataque.</p>
+          <div class="tri-tags"><span>Falla técnica</span><span>Config. errónea</span><span>Diseño deficiente</span></div>
+        </div>
+        <div class="tri-arrow icon"><Icon name="lucide:arrow-right" /></div>
+        <div class="tri-card threat">
+          <div class="tri-icon icon"><Icon name="lucide:zap" /></div>
+          <h3>Amenaza</h3>
+          <p>Evento, agente o circunstancia con potencial de explotar una vulnerabilidad y causar daño. Puede ser interna, externa, intencional o accidental.</p>
+          <div class="tri-tags"><span>Hackers</span><span>Malware</span><span>Error humano</span></div>
+        </div>
+        <div class="tri-arrow icon"><Icon name="lucide:arrow-right" /></div>
+        <div class="tri-card risk">
+          <div class="tri-icon icon"><Icon name="lucide:chart-no-axes-column-decreasing" /></div>
+          <h3>Riesgo</h3>
+          <p>Probabilidad de que una amenaza explote una vulnerabilidad y el impacto resultante sobre el activo de información.</p>
+          <div class="formula"><span class="val">Riesgo</span><span class="op">=</span><span class="val">Probabilidad</span><span class="op">×</span><span class="val">Impacto</span></div>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom:1rem" class="rv">Ejemplos Prácticos</h3>
+      <div class="tabs-wrap rv" id="exTabs">
+        <div class="tabs-head">
+          <button class="tab-btn active" data-tab="ej1">
+            <span class="icon"><Icon name="lucide:monitor" /></span>
+            <span>Ejemplo 1 — Sistema Informático</span>
+          </button>
+          <button class="tab-btn" data-tab="ej2">
+            <span class="icon"><Icon name="lucide:building-2" /></span>
+            <span>Ejemplo 2 — Empresa</span>
+          </button>
+        </div>
+        <div class="tab-panel active" id="ej1">
+          <div class="example-grid">
+            <div class="ex-step vuln"><div class="ex-label"><span class="icon"><Icon name="lucide:lock-open" /></span> Vulnerabilidad</div><p>Servidor web con Apache 2.2 desactualizado con <strong>CVE-2021-41773 (Path Traversal)</strong>, permitiendo acceder a archivos fuera del directorio raíz.</p></div>
+            <div class="ex-step threat"><div class="ex-label"><span class="icon"><Icon name="lucide:zap" /></span> Amenaza</div><p>Atacante externo que <strong>escanea internet</strong> de forma automatizada buscando servidores con esa versión vulnerable para explotarla.</p></div>
+            <div class="ex-step risk"><div class="ex-label"><span class="icon"><Icon name="lucide:chart-no-axes-column-decreasing" /></span> Riesgo</div><p><strong>Alta prob. + Impacto crítico:</strong> Exposición de archivos internos del servidor, acceso no autorizado y posible robo de datos sensibles.</p></div>
+          </div>
+        </div>
+        <div class="tab-panel" id="ej2">
+          <div class="example-grid">
+            <div class="ex-step vuln"><div class="ex-label"><span class="icon"><Icon name="lucide:lock-open" /></span> Vulnerabilidad</div><p>Empleado de contabilidad con acceso a nómina, tesorería y contabilidad sin restricciones. El <strong>principio de mínimo privilegio</strong> no está implementado.</p></div>
+            <div class="ex-step threat"><div class="ex-label"><span class="icon"><Icon name="lucide:zap" /></span> Amenaza</div><p>Empleado <strong>descontento o con incentivo económico</strong> puede realizar fraude interno, transfiriendo fondos a cuentas propias de forma encubierta.</p></div>
+            <div class="ex-step risk"><div class="ex-label"><span class="icon"><Icon name="lucide:chart-no-axes-column-decreasing" /></span> Riesgo</div><p><strong>Prob. media-alta + Impacto crítico:</strong> Pérdida económica, daño reputacional, sanciones bajo <strong>Ley 1273</strong> y posibles procesos penales.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p4" class="section">
+    <div class="section-num">04</div>
+    <div class="section-inner">
+      <div class="section-tag rv"><span class="tag-pulse"></span>Pregunta 04</div>
+      <h2 class="rv">Fases del Flujo de Trabajo de la Auditoría</h2>
+
+      <div class="qbox rv">
+        <div class="qbox-tag">
+          <span class="icon"><Icon name="lucide:circle-help" /></span>
+          <span>Pregunta</span>
+        </div>
+        <p>El ciclo son: <strong>planificación</strong> (matriz de riesgos), <strong>ejecución</strong> (evidencias y pruebas), <strong>informe</strong> (hallazgos) y <strong>seguimiento</strong> (planes de mejoramiento). Consultar cada uno.</p>
+      </div>
+
+      <div class="abox rv">
+        <div class="abox-tag">
+          <span class="icon"><Icon name="lucide:lightbulb" /></span>
+          <span>Respuesta</span>
+        </div>
+        <p>El ciclo de trabajo se estructura en <strong>cuatro fases secuenciales e interrelacionadas</strong>. Cada fase produce entregables que alimentan la siguiente.</p>
+      </div>
+
+      <div class="phases rv">
+        <div class="phase p1">
+          <div class="phase-badge b1">01</div>
+          <div class="phase-title"><span class="icon"><Icon name="lucide:map" /></span> Planificación</div>
+          <div class="phase-sub">// Matriz de Riesgos</div>
+          <p>Fase inicial donde se define el alcance, objetivos, metodología y recursos. El producto principal es la <strong>Matriz de Riesgos</strong>, que identifica y prioriza los riesgos por probabilidad e impacto.</p>
+          <div class="phase-tags"><span>Plan de auditoría</span><span>Matriz de riesgos</span><span>Cronograma</span><span>Equipo</span></div>
+        </div>
+        <div class="phase p2">
+          <div class="phase-badge b2">02</div>
+          <div class="phase-title"><span class="icon"><Icon name="lucide:search-check" /></span> Ejecución</div>
+          <div class="phase-sub">// Evidencias y Pruebas</div>
+          <p>Trabajo de campo: recopilación de evidencias mediante entrevistas, observación directa y pruebas técnicas. Las evidencias deben ser <strong>Suficientes, Auténticas, Confiables y Útiles</strong>.</p>
+          <div class="phase-tags"><span>Entrevistas</span><span>Pentesting</span><span>Logs</span><span>Muestreo</span></div>
+        </div>
+        <div class="phase p3">
+          <div class="phase-badge b3">03</div>
+          <div class="phase-title"><span class="icon"><Icon name="lucide:file-search" /></span> Informe</div>
+          <div class="phase-sub">// Hallazgos</div>
+          <p>Los <strong>hallazgos</strong> son discrepancias entre la situación actual y el criterio de auditoría. Cada hallazgo incluye: condición, criterio, causa raíz, efecto potencial y recomendación.</p>
+          <div class="phase-tags"><span>Hallazgos</span><span>No conformidades</span><span>Recomendaciones</span></div>
+        </div>
+        <div class="phase p4">
+          <div class="phase-badge b4">04</div>
+          <div class="phase-title"><span class="icon"><Icon name="lucide:chart-column-big" /></span> Seguimiento</div>
+          <div class="phase-sub">// Mejoramiento</div>
+          <p>La organización elabora <strong>Planes de Mejoramiento</strong>: qué se hará, quién responde, en qué fecha, con qué recursos y cómo se mide la efectividad de las correcciones.</p>
+          <div class="phase-tags"><span>Acciones correctivas</span><span>KPIs</span><span>Cierre hallazgos</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p5" class="section alt">
+    <div class="section-num">05</div>
+    <div class="section-inner">
+      <div class="section-tag rv"><span class="tag-pulse"></span>Pregunta 05</div>
+      <h2 class="rv">Leyes y Decretos Colombianos</h2>
+
+      <div class="qbox rv">
+        <div class="qbox-tag">
+          <span class="icon"><Icon name="lucide:circle-help" /></span>
+          <span>Pregunta</span>
+        </div>
+        <p>De qué se encargan cada una de estas leyes o decretos: <strong>Ley 1581 de 2012</strong> · <strong>Decreto 1377 de 2013</strong> · <strong>Ley 1273 de 2009</strong></p>
+      </div>
+
+      <div class="abox rv">
+        <div class="abox-tag">
+          <span class="icon"><Icon name="lucide:lightbulb" /></span>
+          <span>Respuesta</span>
+        </div>
+        <p>Las tres normas forman el marco jurídico colombiano para la <strong>protección de datos personales</strong> y la <strong>seguridad informática</strong>. Selecciona cada ley para ver sus aspectos clave:</p>
+      </div>
+
+      <div class="laws-tabs rv" id="lawTabs">
+        <div class="law-head">
+          {lawTabs.map((law, index) => (
+            <button class={`law-btn ${index === 0 ? 'active' : ''}`} data-law={law.id}>
+              <span class="icon"><Icon name={law.icon} /></span>
+              <span>{law.btn}</span>
+            </button>
+          ))}
+        </div>
+
+        {lawTabs.map((law, index) => (
+          <div class={`law-panel ${index === 0 ? 'active' : ''}`} id={law.id}>
+            <div class={`law-hero ${law.heroClass}`}>
+              <div class="law-year">{law.year}</div>
+              <div>
+                <h3>{law.title}</h3>
+                <p>{law.desc}</p>
+              </div>
+            </div>
+            <div class="law-points">
+              {law.points.map((point) => (
+                <div class="lp">
+                  <span class="lp-icon icon"><Icon name={point.icon} /></span>
+                  <div set:html={point.text}></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="p6" class="section">
+    <div class="section-num">06</div>
+    <div class="section-inner">
+      <div class="section-tag rv"><span class="tag-pulse"></span>Pregunta 06</div>
+      <h2 class="rv">Los 3 Pilares de la Norma ISO/IEC 27001</h2>
+
+      <div class="qbox rv">
+        <div class="qbox-tag">
+          <span class="icon"><Icon name="lucide:circle-help" /></span>
+          <span>Pregunta</span>
+        </div>
+        <p>Cuáles son los 3 pilares de la norma ISO 27001 y dónde se puede aplicar. Dar un ejemplo de cómo se aplican en un sistema de información bancario.</p>
+      </div>
+
+      <div class="abox rv">
+        <div class="abox-tag">
+          <span class="icon"><Icon name="lucide:lightbulb" /></span>
+          <span>Respuesta</span>
+        </div>
+        <p>La norma ISO 27001 se fundamenta en la <strong>Tríada CID</strong> (<em>Confidencialidad, Integridad, Disponibilidad</em>), los tres pilares esenciales de la seguridad de la información que toda organización debe garantizar.</p>
+      </div>
+
+      <div class="cia-grid rv">
+        <div class="cia-card conf">
+          <div class="cia-letter">C</div>
+          <div class="cia-title"><span class="icon"><Icon name="lucide:lock" /></span><h3>Confidencialidad</h3></div>
+          <p>La información es accesible <strong>únicamente para personas autorizadas</strong>. Protege contra divulgación no autorizada de datos sensibles.</p>
+          <div class="controls">
+            <span class="ctl"><span class="icon"><Icon name="lucide:key-round" /></span> Cifrado AES-256</span>
+            <span class="ctl"><span class="icon"><Icon name="lucide:id-card" /></span> Control de accesos (RBAC)</span>
+            <span class="ctl"><span class="icon"><Icon name="lucide:folder-lock" /></span> Clasificación de datos</span>
+          </div>
+          <div class="bank-box">
+            <div class="bank-label"><span class="icon"><Icon name="lucide:landmark" /></span> Ejemplo Bancario</div>
+            <p>Cifrado TLS 1.3 en transacciones, autenticación multifactor (MFA), acceso restringido por rol para datos de clientes.</p>
+          </div>
+        </div>
+
+        <div class="cia-card integ">
+          <div class="cia-letter">I</div>
+          <div class="cia-title"><span class="icon"><Icon name="lucide:badge-check" /></span><h3>Integridad</h3></div>
+          <p>La información es <strong>precisa, completa y no alterada</strong> sin autorización. Garantiza la exactitud de los datos.</p>
+          <div class="controls">
+            <span class="ctl"><span class="icon"><Icon name="lucide:binary" /></span> Hash SHA-256</span>
+            <span class="ctl"><span class="icon"><Icon name="lucide:file-signature" /></span> Firma digital</span>
+            <span class="ctl"><span class="icon"><Icon name="lucide:scroll-text" /></span> Logs inmutables</span>
+          </div>
+          <div class="bank-box">
+            <div class="bank-label"><span class="icon"><Icon name="lucide:landmark" /></span> Ejemplo Bancario</div>
+            <p>Cada transacción genera un hash SHA-256 inmutable. Los extractos incluyen firma electrónica certificada y logs de solo lectura.</p>
+          </div>
+        </div>
+
+        <div class="cia-card avail">
+          <div class="cia-letter">D</div>
+          <div class="cia-title"><span class="icon"><Icon name="lucide:server-cog" /></span><h3>Disponibilidad</h3></div>
+          <p>Los sistemas e información están <strong>accesibles cuando se necesiten</strong>. Garantiza la continuidad del servicio.</p>
+          <div class="controls">
+            <span class="ctl"><span class="icon"><Icon name="lucide:refresh-ccw" /></span> Redundancia activa</span>
+            <span class="ctl"><span class="icon"><Icon name="lucide:database-backup" /></span> Backups automáticos</span>
+            <span class="ctl"><span class="icon"><Icon name="lucide:shield" /></span> Anti-DDoS</span>
+          </div>
+          <div class="bank-box">
+            <div class="bank-label"><span class="icon"><Icon name="lucide:landmark" /></span> Ejemplo Bancario</div>
+            <p>Alta disponibilidad 99.99% SLA, datacenters redundantes en 2 ciudades, backups cada 15 min, <code>RTO &lt; 4h</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="where-box rv">
+        <h3>¿Dónde se aplica ISO 27001?</h3>
+        <div class="chips-flex">
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:landmark" /></span> Bancos y Fintech</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:heart-pulse" /></span> Sector Salud</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:building" /></span> Gobierno Digital</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:tower-control" /></span> Telecomunicaciones</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:laptop" /></span> Empresas Tech</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:shopping-cart" /></span> Retail / E-commerce</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:graduation-cap" /></span> Educación Superior</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:file-badge" /></span> Seguros</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:zap" /></span> Energía y Utilities</span>
+          <span class="apply-chip"><span class="icon"><Icon name="lucide:rocket" /></span> Startups SaaS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p7" class="section alt">
+    <div class="section-num">07</div>
+    <div class="section-inner">
+      <div class="section-tag rv"><span class="tag-pulse"></span>Pregunta 07</div>
+      <h2 class="rv">SGSI — Sistema de Gestión de Seguridad de la Información</h2>
+
+      <div class="qbox rv">
+        <div class="qbox-tag">
+          <span class="icon"><Icon name="lucide:circle-help" /></span>
+          <span>Pregunta</span>
+        </div>
+        <p>Qué es Sistema de Gestión de Seguridad de la Información y qué es la evaluación de riesgos y la matriz de riesgo en un SGSI.</p>
+      </div>
+
+      <div class="abox rv">
+        <div class="abox-tag">
+          <span class="icon"><Icon name="lucide:lightbulb" /></span>
+          <span>Respuesta</span>
+        </div>
+        <p>Un <strong>SGSI</strong> es un marco sistemático de políticas, procesos, procedimientos y controles que gestiona de forma estructurada y continua los riesgos de seguridad. Se basa en el ciclo <strong>PHVA (Planear-Hacer-Verificar-Actuar)</strong> de ISO 27001.</p>
+      </div>
+
+      <div class="phva rv">
+        <div class="phva-item pp">
+          <div class="phva-letter">P</div>
+          <div class="phva-title"><span class="icon"><Icon name="lucide:clipboard-pen-line" /></span> Planear</div>
+          <p>Identificar activos, evaluar riesgos y definir controles. Establecer el alcance del SGSI y los objetivos de seguridad.</p>
+        </div>
+        <div class="phva-item ph">
+          <div class="phva-letter">H</div>
+          <div class="phva-title"><span class="icon"><Icon name="lucide:play-circle" /></span> Hacer</div>
+          <p>Implementar los controles definidos, capacitar al personal y poner en marcha las medidas de seguridad acordadas.</p>
+        </div>
+        <div class="phva-item pv">
+          <div class="phva-letter">V</div>
+          <div class="phva-title"><span class="icon"><Icon name="lucide:clipboard-check" /></span> Verificar</div>
+          <p>Monitorear y medir la efectividad de los controles. Realizar auditorías internas y revisiones periódicas del SGSI.</p>
+        </div>
+        <div class="phva-item pa">
+          <div class="phva-letter">A</div>
+          <div class="phva-title"><span class="icon"><Icon name="lucide:wrench" /></span> Actuar</div>
+          <p>Tomar acciones correctivas sobre los hallazgos y mejorar continuamente el SGSI basándose en los resultados.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom:.5rem;font-size:1.1rem" class="rv">Evaluación de Riesgos y Matriz de Riesgo</h3>
+      <p class="rv" style="margin-bottom:1rem;font-size:.9rem;color:var(--text2)">La <strong style="color:var(--head)">evaluación de riesgos</strong> identifica, analiza y valora los riesgos. La <strong style="color:var(--head)">Matriz de Riesgo</strong> cruza Probabilidad × Impacto para priorizarlos. Pasa el cursor sobre las celdas:</p>
+
+      <div class="matrix-wrap rv">
+        <div class="matrix-title">
+          <span class="icon"><Icon name="lucide:chart-column" /></span>
+          <span>Matriz de Riesgo Interactiva</span>
+          <div class="matrix-legend" style="margin:0 0 0 auto">
+            <span class="ml ml-crit">Crítico</span>
+            <span class="ml ml-high">Alto</span>
+            <span class="ml ml-med">Medio</span>
+            <span class="ml ml-low">Bajo</span>
+          </div>
+        </div>
+        <div class="matrix-grid">
+          <div class="mg-corner"></div>
+          <div class="mg-hdr">Impacto Bajo</div>
+          <div class="mg-hdr">Impacto Medio</div>
+          <div class="mg-hdr">Impacto Alto</div>
+
+          <div class="mg-side">Prob. Alta</div>
+          <div class="mg-cell med" data-tip="MEDIO — Alta prob. + Bajo impacto. Controlar activamente.">MEDIO</div>
+          <div class="mg-cell high" data-tip="ALTO — Alta prob. + Impacto medio. Mitigar con urgencia.">ALTO</div>
+          <div class="mg-cell crit" data-tip="CRÍTICO — Alta prob. + Alto impacto. Acción inmediata requerida.">CRÍTICO</div>
+
+          <div class="mg-side">Prob. Media</div>
+          <div class="mg-cell low" data-tip="BAJO — Prob. media + Bajo impacto. Monitorear.">BAJO</div>
+          <div class="mg-cell med" data-tip="MEDIO — Prob. media + Impacto medio. Gestionar.">MEDIO</div>
+          <div class="mg-cell high" data-tip="ALTO — Prob. media + Alto impacto. Prioridad alta.">ALTO</div>
+
+          <div class="mg-side">Prob. Baja</div>
+          <div class="mg-cell vlow" data-tip="MUY BAJO — Baja prob. + Bajo impacto. Aceptar riesgo.">MUY BAJO</div>
+          <div class="mg-cell low" data-tip="BAJO — Baja prob. + Impacto medio. Revisar anualmente.">BAJO</div>
+          <div class="mg-cell med" data-tip="MEDIO — Baja prob. + Alto impacto. Plan de contingencia.">MEDIO</div>
+        </div>
+      </div>
+
+      <div class="tbl-wrap rv">
+        <table class="rtbl">
+          <thead>
+            <tr>
+              <th>Riesgo</th><th>Activo</th><th>Amenaza</th>
+              <th>Prob.</th><th>Impacto</th><th>Nivel</th><th>Tratamiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Acceso no autorizado a BD</td><td>Base de datos clientes</td><td>SQL Injection</td><td>Alta</td><td>Alto</td><td><span class="rbadge rb-c">Crítico</span></td><td>WAF + parches</td></tr>
+            <tr><td>Pérdida de información</td><td>Servidor de archivos</td><td>Ransomware</td><td>Media</td><td>Alto</td><td><span class="rbadge rb-h">Alto</span></td><td>Backups + EDR</td></tr>
+            <tr><td>Fuga de datos</td><td>Correo electrónico</td><td>Phishing</td><td>Alta</td><td>Medio</td><td><span class="rbadge rb-h">Alto</span></td><td>MFA + training</td></tr>
+            <tr><td>Caída del sistema web</td><td>Servidor web</td><td>Ataque DDoS</td><td>Media</td><td>Medio</td><td><span class="rbadge rb-m">Medio</span></td><td>CDN + filtros</td></tr>
+            <tr><td>Acceso físico</td><td>Datacenter</td><td>Intrusos físicos</td><td>Baja</td><td>Alto</td><td><span class="rbadge rb-m">Medio</span></td><td>Control biométrico</td></tr>
+            <tr><td>Software desactualizado</td><td>Estaciones de trabajo</td><td>Exploits conocidos</td><td>Alta</td><td>Bajo</td><td><span class="rbadge rb-m">Medio</span></td><td>Patch management</td></tr>
+            <tr><td>Fallo eléctrico</td><td>Infraestructura TI</td><td>Corte eléctrico</td><td>Baja</td><td>Bajo</td><td><span class="rbadge rb-l">Bajo</span></td><td>UPS existente</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">AUDITSEC · UTS</div>
+      <p>Consulta académica — <strong>Unidades Tecnológicas de Santander</strong> · 2025</p>
+      <div class="footer-links">
+        <a href="#p1">Auditoría</a><span>·</span>
+        <a href="#p3">Amenazas</a><span>·</span>
+        <a href="#p5">Leyes</a><span>·</span>
+        <a href="#p6">ISO 27001</a><span>·</span>
+        <a href="#p7">SGSI</a>
+      </div>
+      <p style="font-size:.73rem;color:var(--border2)">Fundamentos de Auditoría Interna y Protección de Datos Personales</p>
+    </div>
+  </footer>
+
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <script>
+    (function(){
+      const c=document.getElementById('heroCanvas');
+      if(!c)return;
+      const ctx=c.getContext('2d');
+      let W=c.width=window.innerWidth,H=c.height=window.innerHeight;
+      const pts=Array.from({length:60},()=>({
+        x:Math.random()*W,y:Math.random()*H,
+        vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+        r:Math.random()*1.5+.5,
+        a:Math.random()
+      }));
+      window.addEventListener('resize',()=>{W=c.width=window.innerWidth;H=c.height=window.innerHeight});
+      function draw(){
+        ctx.clearRect(0,0,W,H);
+        pts.forEach(p=>{
+          p.x+=p.vx;p.y+=p.vy;
+          if(p.x<0||p.x>W)p.vx*=-1;
+          if(p.y<0||p.y>H)p.vy*=-1;
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle=`rgba(0,245,155,${p.a*.4})`;
+          ctx.fill();
+        });
+        for(let i=0;i<pts.length;i++){
+          for(let j=i+1;j<pts.length;j++){
+            const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+            const d=Math.sqrt(dx*dx+dy*dy);
+            if(d<120){
+              ctx.beginPath();
+              ctx.moveTo(pts[i].x,pts[i].y);
+              ctx.lineTo(pts[j].x,pts[j].y);
+              ctx.strokeStyle=`rgba(0,196,255,${(1-d/120)*.08})`;
+              ctx.lineWidth=1;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    (function(){
+      const statsEl = document.querySelector('.hero-stats');
+      if (!statsEl) return;
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+
+          document.querySelectorAll('.stat-n[data-target]').forEach(el => {
+            const target = +el.dataset.target;
+            let v = 0;
+            const step = target / 50;
+            const t = setInterval(() => {
+              v = Math.min(v + step, target);
+              el.textContent = Math.round(v);
+              if (v >= target) clearInterval(t);
+            }, 25);
+          });
+          obs.disconnect(); // Disconnect after the animation has been triggered once.
+        });
+      }, { threshold: 0.5 });
+      observer.observe(statsEl);
+    })();
+
+    window.addEventListener('scroll',()=>{
+      const pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
+      document.getElementById('progress').style.width=pct+'%';
+      document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
+      document.getElementById('scrollTop').classList.toggle('visible',window.scrollY>400);
+
+      document.querySelectorAll('section[id]').forEach(s=>{
+        const a=document.querySelector(`.nav-links a[href="#${s.id}"]`);
+        if(!a)return;
+        a.classList.toggle('active',window.scrollY>=s.offsetTop-160&&window.scrollY<s.offsetTop+s.offsetHeight-160);
+      });
+    });
+
+    const ham=document.getElementById('ham');
+    const drawer=document.getElementById('drawer');
+    const dOverlay=document.getElementById('dOverlay');
+    const dClose=document.getElementById('dClose');
+    function openDrawer(){drawer.classList.add('open');dOverlay.classList.add('open');ham.classList.add('open')}
+    function closeDrawer(){drawer.classList.remove('open');dOverlay.classList.remove('open');ham.classList.remove('open')}
+    ham.addEventListener('click',()=>drawer.classList.contains('open')?closeDrawer():openDrawer());
+    dClose.addEventListener('click',closeDrawer);
+    dOverlay.addEventListener('click',closeDrawer);
+    drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeDrawer));
+
+    const revObs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');revObs.unobserve(e.target)}});
+    },{threshold:.07});
+    document.querySelectorAll('.rv').forEach(e=>revObs.observe(e));
+
+    document.querySelectorAll('.acc-head').forEach(h=>{
+      h.addEventListener('click',()=>{
+        const item=h.closest('.acc-item');
+        const wasOpen=item.classList.contains('open');
+        item.closest('.acc')?.querySelectorAll('.acc-item').forEach(i=>i.classList.remove('open'));
+        if(!wasOpen)item.classList.add('open');
+      });
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(b=>{
+      b.addEventListener('click',()=>{
+        const target=b.dataset.tab;
+        const wrap=b.closest('.tabs-wrap');
+        wrap.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+        wrap.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        document.getElementById(target)?.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.law-btn').forEach(b=>{
+      b.addEventListener('click',()=>{
+        const law=b.dataset.law;
+        const wrap=b.closest('.laws-tabs');
+        wrap.querySelectorAll('.law-btn').forEach(x=>x.classList.remove('active'));
+        wrap.querySelectorAll('.law-panel').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        document.getElementById(law)?.classList.add('active');
+      });
+    });
+
+    const tip=document.getElementById('matTip');
+    document.querySelectorAll('.mg-cell').forEach(c=>{
+      c.addEventListener('mouseenter',()=>{
+        tip.textContent=c.dataset.tip;
+        tip.classList.add('show');
+      });
+      c.addEventListener('mousemove',e=>{
+        tip.style.left=(e.clientX+14)+'px';
+        tip.style.top=(e.clientY-30)+'px';
+      });
+      c.addEventListener('mouseleave',()=>tip.classList.remove('show'));
+    });
+  </script>
+</body>
+</html>
